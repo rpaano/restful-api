@@ -66,6 +66,5 @@ class User extends Authenticatable
     public static function generateVerificationCode($length = 40)
     {
         return str_random(40);
-//        return Str::random($length);
     }
 }
