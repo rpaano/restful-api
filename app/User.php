@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -60,8 +61,9 @@ class User extends Authenticatable
         return $this->admin == User::ADMIN_USER;
     }
 
-    public static function generateVerificationCode()
+    public static function generateVerificationCode($length = 40)
     {
-        return str_random(40);
+//        return str_random(40);
+        return Str::random($length);
     }
 }
