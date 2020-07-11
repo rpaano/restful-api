@@ -17,6 +17,8 @@ class User extends Authenticatable
     const ADMIN_USER = 'true';
     const REGULAR_USER = 'false';
 
+    protected $table = 'users';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -63,7 +65,7 @@ class User extends Authenticatable
 
     public static function generateVerificationCode($length = 40)
     {
-//        return str_random(40);
-        return Str::random($length);
+        return str_random(40);
+//        return Str::random($length);
     }
 }
