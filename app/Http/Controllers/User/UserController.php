@@ -68,14 +68,12 @@ class UserController extends ApiController
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param int $id
+     * @param User $user
      * @return JsonResponse
      * @throws ValidationException
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        $user = User::findOrFail($id);
-
         $rules = [
             'email'    => 'email|unique:users,email'. $user->id,
             'password' => 'min:6|confirmed',
@@ -118,13 +116,12 @@ class UserController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param User $user
      * @return JsonResponse
+     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        $user = User::findOrFail($id);
-
         $user->delete();
 
         return $this->showOne($user);
