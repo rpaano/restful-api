@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers\Transaction;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use App\Transaction;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
-class TransactionCategoryController extends Controller
+class TransactionCategoryController extends ApiController
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Transaction $transaction
+     * @return JsonResponse
      */
-    public function index()
+    public function index(Transaction $transaction)
     {
-        
+        $categories = $transaction->product->categories;
+
+        return $this->showAll($categories);
     }
 }
