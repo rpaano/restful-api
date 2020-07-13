@@ -20,7 +20,7 @@ class CategorySellerController extends ApiController
             ->with('seller')
             ->get()
             ->pluck('seller')
-//            ->unique()
+            ->unique('id')
             ->values();
 
         return $this->showAll($sellers);
