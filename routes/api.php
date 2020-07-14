@@ -55,6 +55,7 @@ Route::resource('transactions.sellers','Transaction\TransactionSellerController'
  * Product
  */
 Route::resource('products','Product\ProductController', ['only' => ['index', 'show']]);
+Route::resource('products.transactions','Product\ProductTransactionController', ['only' => ['index']]);
 
 /*
  * User
