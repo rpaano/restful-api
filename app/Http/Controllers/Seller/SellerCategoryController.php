@@ -6,7 +6,7 @@ use App\Http\Controllers\ApiController;
 use App\Seller;
 use Illuminate\Http\JsonResponse;
 
-class SellerTransactionController extends ApiController
+class SellerCategoryController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -16,14 +16,16 @@ class SellerTransactionController extends ApiController
      */
     public function index(Seller $seller)
     {
-        $transactions = $seller->products()
-            ->whereHas('transactions')
-            ->with('transactions')
+        $categories = $seller->products()
+            ->whereHas('categories')
+            ->with('categories')
             ->get()
-            ->pluck('transactions')
+            ->pluck('categories')
             ->collapse()
+            ->unique('id')
+            ->values()
         ;
 
-        return $this->showAll($transactions);
+        return $this->showAll($categories);
     }
 }
