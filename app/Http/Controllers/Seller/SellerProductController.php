@@ -6,6 +6,7 @@ use App\Http\Controllers\ApiController;
 use App\Product;
 use App\Seller;
 use App\User;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -100,11 +101,18 @@ class SellerProductController extends ApiController
     /**
      * Display a listing of the resource.
      *
-     * @return void
+     * @param Seller $seller
+     * @param Product $product
+     * @return JsonResponse|void
+     * @throws Exception
      */
-    public function destroy()
+    public function destroy(Seller $seller, Product $product)
     {
+        $this->checkSeller($seller, $product);
 
+        $product->delete();
+
+        return $this->showOne($product);
     }
 
     public function checkSeller(Seller $seller, Product $product)
