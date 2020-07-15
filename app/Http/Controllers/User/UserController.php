@@ -75,7 +75,7 @@ class UserController extends ApiController
     public function update(Request $request, User $user)
     {
         $rules = [
-            'email'    => 'email|unique:users,email'. $user->id,
+            'email'    => 'email|unique:users,email,'. $user->id,
             'password' => 'min:6|confirmed',
             'admin'    => 'in:'. User::REGULAR_USER, User::ADMIN_USER,
         ];
@@ -104,7 +104,7 @@ class UserController extends ApiController
             $user->admin = $request->admin;
         }
 
-        if ($user->isDirty()) {
+        if (!$user->isDirty()) {
             return $this->errorResponse('You need to specify a new value to update', 422);
         }
 
@@ -125,5 +125,15 @@ class UserController extends ApiController
         $user->delete();
 
         return $this->showOne($user);
+    }
+
+    public function verify(User $user)
+    {
+        $user->verified = User::VERIFIED_USER;
+        $user->verification_token = null;
+
+        $user->save();
+
+        return $this->showMessage("The account has been verified successfully");
     }
 }
