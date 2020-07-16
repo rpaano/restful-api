@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Transformers\UserTransformer;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
 trait ApiResponser
@@ -31,6 +32,7 @@ trait ApiResponser
 
         $collection = $this->filterData($collection, $transformer);
         $collection = $this->sortData($collection, $transformer);
+        $collection = $this->paginateData($collection);
         $collection = $this->transformData($collection, $transformer);
 
         return $this->successResponse(
@@ -75,6 +77,23 @@ trait ApiResponser
             $collection = $collection->sortBy->{$attribute};
         }
         return $collection;
+    }
+
+    protected function paginateData(Collection $collection)
+    {
+        $page = LengthAwarePaginator::resolveCurrentPage();
+
+        $perPage = 15;
+
+        $result = $collection->slice(($page - 1) * $perPage, $perPage)->values();
+
+        $paginated = new LengthAwarePaginator($result, $collection->count(), $perPage, $page, [
+            'path' => LengthAwarePaginator::resolveCurrentPath(),
+        ]);
+
+        $paginated->appends(request()->all());
+
+        return $paginated;
     }
 
     public function transformData($data, $transformer)
