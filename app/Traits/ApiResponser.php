@@ -29,6 +29,8 @@ trait ApiResponser
 
         $transformer = $collection->first()->transformer;
 
+        $collection = $this->sortData($collection);
+
         $collection = $this->transformData($collection, $transformer);
 
         return $this->successResponse(
@@ -52,6 +54,16 @@ trait ApiResponser
         return $this->successResponse([
             'data' => $message
         ], $code);
+    }
+
+    protected function sortData(Collection $collection)
+    {
+        if (request()->has("sort_by")) {
+            $attribute = request()->sort_by;
+
+            $collection = $collection->sortBy->{$attribute};
+        }
+        return $collection;
     }
 
     public function transformData($data, $transformer)
