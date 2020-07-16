@@ -141,7 +141,7 @@ class UserController extends ApiController
 
     public function resend(User $user)
     {
-        if ($user->is_Verified()) {
+        if ($user->isVerified()) {
             return $this->errorResponse("The user is already verified", 409);
         }
 
