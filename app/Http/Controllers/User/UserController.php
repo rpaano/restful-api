@@ -145,8 +145,13 @@ class UserController extends ApiController
             return $this->errorResponse("The user is already verified", 409);
         }
 
-        Mail::to($user)->send(new UserConfirmEmail($user));
+        sendMail($user);
 
         return $this->showMessage("The email have been sent to your email");
+    }
+
+    private function sendMail()
+    {
+
     }
 }
