@@ -65,3 +65,4 @@ Route::resource('products.buyers.transactions','Product\ProductBuyerTransactionC
  */
 Route::resource('users','User\UserController', ['except' => ['create', 'edit']]);
 Route::name('verify')->get('verify/users/{user:verification_token}', 'User\UserController@verify');
+Route::name('resend')->get('users/{user}/resend', 'User\UserController@resend');
