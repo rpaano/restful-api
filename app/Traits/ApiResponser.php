@@ -35,6 +35,7 @@ trait ApiResponser
         $collection = $this->sortData($collection, $transformer);
         $collection = $this->paginateData($collection);
         $collection = $this->transformData($collection, $transformer);
+//        $collection = $this->cacheResponse($collection);
 
         return $this->successResponse(
             $collection
@@ -107,10 +108,31 @@ trait ApiResponser
         return $paginated;
     }
 
-    public function transformData($data, $transformer)
+    protected function transformData($data, $transformer)
     {
         $transformation = fractal($data, $transformer);
 
         return $transformation->toArray();
+    }
+
+    protected function cacheResponse($data, $time = 30)
+    {
+        $url = request()->url();
+        $queryParams = request()->query();
+
+        ksort($queryParams);
+
+        $queryParams = http_build_query($queryParams);
+
+        $fulUrl = "{$url}?{$queryParams}";
+
+        try {
+            $data =  cache()->remember($fulUrl, $time, function () use($data){
+                return $data;
+            });
+        } catch (\Exception $e) {
+        }
+
+        return $data;
     }
 }
