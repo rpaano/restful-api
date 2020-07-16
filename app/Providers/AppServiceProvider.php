@@ -27,13 +27,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        User::created(function (User $user) {
-            Mail::to($user)->send(new UserConfirmEmail($user));
+        User::created(function ($user) {
+            $this->sendMail($user);
         });
 
-        User::updated(function (User $user) {
+        User::updated(function ($user) {
             if ($user->isDirty('email')) {
-                Mail::to($user)->send(new UserConfirmEmail($user));
+                $this->sendMail($user);
             }
         });
 
@@ -43,5 +43,10 @@ class AppServiceProvider extends ServiceProvider
                 $product->save();
             }
         });
+    }
+
+    private function sendMail(User $user)
+    {
+        Mail::to($user)->send(new UserConfirmEmail($user));
     }
 }
