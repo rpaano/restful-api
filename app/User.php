@@ -2,11 +2,10 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Transformers\UserTransformer;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -19,6 +18,8 @@ class User extends Authenticatable
     const REGULAR_USER = 'false';
 
     protected $table = 'users';
+
+    public $transformer = UserTransformer::class;
 
     /**
      * The attributes that are mass assignable.
