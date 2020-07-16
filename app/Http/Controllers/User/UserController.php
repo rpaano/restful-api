@@ -149,9 +149,4 @@ class UserController extends ApiController
 
         return $this->showMessage("The email have been sent to your email");
     }
-
-    private function sendMail()
-    {
-
-    }
 }
