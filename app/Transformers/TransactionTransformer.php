@@ -44,7 +44,7 @@ class TransactionTransformer extends TransformerAbstract
 
             'links' => [
                 [
-                    'rel' => 'sef',
+                    'rel' => 'self',
                     'href' => route('transactions.show', $transaction->id),
                 ],
                 [

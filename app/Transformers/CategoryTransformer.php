@@ -44,7 +44,7 @@ class CategoryTransformer extends TransformerAbstract
 
             'links' => [
                 [
-                    'rel' => 'sef',
+                    'rel' => 'self',
                     'href' => route('categories.show', $category->id),
                 ],
                 [

@@ -47,7 +47,7 @@ class ProductTransformer extends TransformerAbstract
 
             'links' => [
                 [
-                    'rel' => 'sef',
+                    'rel' => 'self',
                     'href' => route('products.show', $product->id),
                 ],
                 [

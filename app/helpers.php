@@ -5,7 +5,7 @@ use App\User;
 use Illuminate\Contracts\Auth\Factory;
 use Illuminate\Support\Facades\Mail;
 
-if (! function_exists('auth')) {
+if (! function_exists('sendMail')) {
     /**
      * Get the available auth instance.
      *

@@ -44,7 +44,7 @@ class SellerTransformer extends TransformerAbstract
 
             'links' => [
                 [
-                    'rel' => 'sef',
+                    'rel' => 'self',
                     'href' => route('sellers.show', $seller->id),
                 ],
                 [

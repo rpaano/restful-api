@@ -46,7 +46,7 @@ class UserTransformer extends TransformerAbstract
 
             'links' => [
                 [
-                    'rel' => 'sef',
+                    'rel' => 'self',
                     'href' => route('users.show', $user->id),
                 ],
             ],
@@ -59,6 +59,8 @@ class UserTransformer extends TransformerAbstract
             'identifier' => 'id',
             'name' => 'name',
             'email' => 'email',
+            'password' => 'password',
+            'password_confirmation' => 'password_confirmation',
             'isVerified' => 'verified',
             'isAdmin' => 'admin',
             'creationDate' => 'created_at',
@@ -75,6 +77,8 @@ class UserTransformer extends TransformerAbstract
             'id' => 'identifier',
             'name' => 'name',
             'email' => 'email',
+            'password'=> 'password',
+            'password_confirmation' => 'password_confirmation',
             'verified' => 'isVerified',
             'admin' => 'isAdmin',
             'created_at' => 'creationDate',
