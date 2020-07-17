@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Seller;
 use App\Http\Controllers\ApiController;
 use App\Product;
 use App\Seller;
+use App\Transformers\SellerTransformer;
 use App\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -15,6 +16,13 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class SellerProductController extends ApiController
 {
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->middleware("transform.input:". SellerTransformer::class)->only(['store', 'update']);
+    }
+
     /**
      * Display a listing of the resource.
      *

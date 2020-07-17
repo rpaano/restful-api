@@ -6,6 +6,8 @@ use App\Http\Controllers\ApiController;
 use App\Product;
 use App\Seller;
 use App\Transaction;
+use App\Transformers\ProductTransformer;
+use App\Transformers\UserTransformer;
 use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -14,6 +16,13 @@ use Illuminate\Validation\ValidationException;
 
 class ProductBuyerTransactionController extends ApiController
 {
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->middleware("transform.input:". ProductTransformer::class)->only('store');
+    }
+
     /**
      * Store a newly created resource in storage.
      *
