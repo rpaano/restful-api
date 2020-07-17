@@ -41,7 +41,7 @@ class TransactionTransformer extends TransformerAbstract
             'creationDate' => $transaction->created_at,
             'lastedDate' => $transaction->updated_at,
             'deletedDate' => isset($transaction->deleted_at) ? (string)$transaction->deleted_at : null,
-            
+
             'links' => [
                 [
                     'rel' => 'sef',
@@ -77,6 +77,21 @@ class TransactionTransformer extends TransformerAbstract
             'creationDate' => 'created_at',
             'lastedDate' => 'updated_at',
             'deletedDate' => 'deleted_at',
+        ];
+
+        return isset($attributes[$index]) ? $attributes[$index] : null;
+    }
+
+    public static function transformedAttribute($index)
+    {
+        $attributes = [
+            'id' => 'identifier',
+            'quantity' => 'quantity',
+            'buyer_id' => 'buyer',
+            'seller_id' => 'seller',
+            'created_at' => 'creationDate',
+            'updated_at' => 'lastedDate',
+            'deleted_at' => 'deletedDate',
         ];
 
         return isset($attributes[$index]) ? $attributes[$index] : null;
