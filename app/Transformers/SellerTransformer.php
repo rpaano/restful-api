@@ -41,6 +41,29 @@ class SellerTransformer extends TransformerAbstract
             'creationDate' => $seller->created_at,
             'lastedDate' => $seller->updated_at,
             'deletedDate' => isset($seller->deleted_at) ? (string)$seller->deleted_at : null,
+
+            'links' => [
+                [
+                    'rel' => 'sef',
+                    'href' => route('sellers.show', $seller->id),
+                ],
+                [
+                    'rel' => 'seller.buyers',
+                    'href' => route('sellers.buyers.index', $seller->id),
+                ],
+                [
+                    'rel' => 'seller.categories',
+                    'href' => route('sellers.categories.index', $seller->id),
+                ],
+                [
+                    'rel' => 'seller.products',
+                    'href' => route('sellers.products.index', $seller->id),
+                ],
+                [
+                    'rel' => 'user',
+                    'href' => route('users.show', $seller->id),
+                ],
+            ],
         ];
     }
 
