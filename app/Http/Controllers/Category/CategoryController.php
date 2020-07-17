@@ -21,9 +21,7 @@ class CategoryController extends ApiController
     {
         $category = Category::all();
 
-        return  response()->json([
-            'data' => $category,
-        ], 200);
+        return  $this->showAll($category);
     }
 
     /**
