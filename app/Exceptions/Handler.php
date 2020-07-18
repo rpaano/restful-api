@@ -10,6 +10,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
+use mysql_xdevapi\Collection;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -113,6 +114,10 @@ class Handler extends ExceptionHandler
 
     public function unauthenticated($request, AuthenticationException $exception)
     {
+        if ($this->isFrontend($request)) {
+            return redirect()->guest('login');
+        }
+
         return $this->errorResponse('Unauthenticated', 401);
     }
 
@@ -127,6 +132,22 @@ class Handler extends ExceptionHandler
     {
         $errors = $e->validator->errors()->getMessages();
 
+        if ($this->isFrontend($request)) {
+            return $this->ajaxIsUsed($request) ?
+                response()->json($errors, 422) :
+                redirect()->back()->withInput($request->input())->withErrors($errors);
+        }
+
         return $this->errorResponse($errors, 422);
+    }
+
+    private function isFrontend($request)
+    {
+        return $request->acceptsHtml() && collect($request->route()->middleware())->contains('web');
+    }
+
+    private function ajaxIsUsed($request)
+    {
+        return $request->ajax();
     }
 }
